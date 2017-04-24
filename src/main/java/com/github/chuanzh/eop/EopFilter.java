@@ -159,12 +159,12 @@ public abstract class  EopFilter implements Filter {
 	
 	/**
 	 * 在执行cantorl中的接口方法前的操作，可以是验证权限等
-	 * @param controlObject
-	 * @param inputRequest
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
+	 * @param controlObject 控制对象
+	 * @param inputRequest 请求Bean对象
+	 * @param request httpRequest
+	 * @param response httpResponse
+	 * @return ErrorResponse 错误响应对象
+	 * @throws Exception 异常信息
 	 */
 	public abstract ErrorResponse beforeDoControl(Object controlObject,Object inputRequest, HttpServletRequest request,HttpServletResponse response)  throws Exception;
 	
