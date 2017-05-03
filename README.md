@@ -15,7 +15,13 @@ The EOP framework has been released to the Maven library, you can download the f
 		<version>1.0.1</version>
 	</dependency>
 ```
-Achieve your ApiFilter class, configured to web.xml，as follows;
+  + Achieve your ApiFilter class, configured to web.xml，as follows;  
+    + getRunTimeLimit(): The maximum execution time of the service  
+    + projectEncode(): The coding of your project, This code will be used in response.  
+    + controlFolder(): The path of your service.  
+    + startRequest(): you can do somethings in this start request, such as Record the log  
+    + endRequest(): you can do somethings in this end request, such as Record the log  
+    + beforeDoControl(): You can deal with some of the logic in the service method before the implementation, such as access control，parameter verification, controlObject parameter is the interface object,inputRequest parameter is request class  
 ```Java
 public class ApiFilter extends EopFilter {
 	
@@ -74,7 +80,7 @@ web.xml configuration
   </filter-mapping>
 ```
 Now you can develop your first interface, the interface consists of three parts, business processing xxxService, request object xxxRequest, response object xxxResponse
-The business class uses the func method directly, passing in xxxRequest, returning xxxResponse.（@DescNote and other annotations are used later to generate annotations and injections for objects）
+The business class uses the func method directly, passing in xxxRequest, returning xxxResponse.（@DescNote and other annotations are used later to generate annotations and injections for objects）,throw exception, so that EOP can capture
 ```Java
 @DescNote("Get Dynamic Follow list")
 public class GetFollowList {
@@ -152,3 +158,20 @@ public class FollowBean {
 	
 }
 ```
+
+## interface access  
+All interfaces are accessed by constructing the method parameter, and you can access the GetFollowList interface in the following way:  
+Http://youhost/projectName/router?method=dynamic.getFollowList&phoneId=123&userId=12&latestOperTime=2017-01-01 00:00:00  
+
+the result is json, such as:  
+{"datas":[{"flightarr":"WuHan","flightarrcode":"PEK","flightdate":"2017-01-01","flightdep":"ShangHai","flightdepcode":"SHA","flightno":"CA1858"}],"errorCode":"1000"}
+
+## create document comments
+the document can be automatically create by use annotations, as follows：  
+the first argument is document path, the second argument is service package path  
+```Java
+    CreateNote cn = new CreateNote();
+    cn.create("/Users/zhangchuan/Desktop/note.html", "cn.chuanz.service");
+```
+![image](https://raw.githubusercontent.com/chuanzh/eop/master/doc/doc1.png)   
+![image](https://raw.githubusercontent.com/chuanzh/eop/master/doc/doc2.png) 
