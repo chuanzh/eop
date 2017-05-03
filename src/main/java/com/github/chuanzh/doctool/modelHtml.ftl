@@ -98,7 +98,13 @@ background: #FFFFFF;
 					<td align="center">${request.parent!}</td>
 					<td align="center">${request.name!}</td>
 					<td align="center">${request.type!}</td>
-					<td align="center">${request.isNull!}</td>
+					<td align="center">
+						<#if request.isNull == 0>
+							否
+						<#else>
+							是
+						</#if>
+					</td>
 					<td align="center">${request.desc!}</td>
 				</tr>
 			</#list>
