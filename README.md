@@ -174,4 +174,25 @@ the first argument is document path, the second argument is service package path
     cn.create("/Users/zhangchuan/Desktop/note.html", "cn.chuanz.service");
 ```
 ![image](https://raw.githubusercontent.com/chuanzh/eop/master/doc/doc1.png)   
-![image](https://raw.githubusercontent.com/chuanzh/eop/master/doc/doc2.png) 
+![image](https://raw.githubusercontent.com/chuanzh/eop/master/doc/doc2.png)   
+
+
+## Error model  
+  + The EOP has help you define some Error that you can use in interface, such as :  
+   + 1001: Missing appKey  
+   + 1002: Invalid appKey  
+   + 1003: IP Forbidden  
+   + 1004: No access to the service (you need configured access service first)
+   + 1005: appKey expired  
+   + 1006: The number of requests is beyond limit  
+   + 1007: Invalid interface method name（method parameter is Error）
+   + 1008: Invalid signature  
+   + 1009: Missing method parameter  
+   + 1010: Missing required parameters  
+   + 1011: Business logic error  
+   + 1012: Service timeout  
+
+1001-1010 error can refer to the permission control module
+
+## Permission Control
+
