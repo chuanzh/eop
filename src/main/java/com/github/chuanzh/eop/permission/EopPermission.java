@@ -264,6 +264,6 @@ public class EopPermission {
 		this.methodCheck = methodCheck;
 		return this;
 	}
-	
+	 
 	
 }
