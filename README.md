@@ -195,4 +195,40 @@ the first argument is document path, the second argument is service package path
 1001-1010 error can refer to the permission control module  
 
 ## Permission Control  
+First, you need to import the permission table [permission.sql](https://github.com/chuanzh/eop/blob/master/doc/permission.sql), which you can configure and add in the eop-admin project.  
+![image](https://raw.githubusercontent.com/chuanzh/eop/master/doc/eop-admin1.png)   
+![image](https://raw.githubusercontent.com/chuanzh/eop/master/doc/eop-admin2.png) 
 
+You can create a new app user, and then assign it appkey, appsecret, 
+  + permission options:  
+    + Bind Ip: only the specified IP can access  
+    + Valid Date: the expiration that the service can be accessed  
+    + Is Lock: when it is "yes", the service will not accessed  
+    + Limit Type: there are tow type,(limit for all service| limit for some service), "limit for all service" that all service can be accessed, "limit for some service": you must configure some service that can be accessed  
+    + Total Limit: the total number of times, when the value is "-1", it is not restricted  
+    + Limit Rate: the unit is seconds, the maximum number of times per second can be accessed.  
+    
+After you configure the permissions list, you can use the permission class to control and use it  
+```Java  
+  EopPermission ep = new EopPermission(dbService);
+  ep.setAppKeyCheck(true)
+    .setIpCheck(true)
+    .setMethodCheck(true);
+  ErrorResponse err = ep.check(request);
+```  
+AppKeyCheck(true): Will verify whether the appKey is available, whether it is out of date, the signature is correct  
+IpCheck(true): Will verify the IP is legal  
+MethodCheck(true): Will check whether more than the total limit or the date limit.  
+if verify fails,that will return ErrorResponse Object.
+
+## Annotations use  
+  + EOP cantains some annotation for injecting objects and create Note,such as: 
+    + @DescNote: define parameter description
+    + @DescNotNull: if you define this annotation no parameter,  when access service, the parameter must be not null, otherwise there will be errors
+    + @IjDbService: database service object, when you use DbBasicService，you can use this annotation like this: 
+  ```Java
+      @IjDbService(DbDynamicConnect.class)
+      private DbBasicService dbService;
+  ```
+
+## Performance Testing 
