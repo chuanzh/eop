@@ -110,7 +110,7 @@ public class GetFollowList {
 	
 }
 ```
-The request object needs to inherit the AbstractRequest class, and if the data needs to be paged, the PagerRequest
+The request object needs to inherit the AbstractRequest class, and if the data needs to be paged, extends PagerRequest
 ```Java
 public class GetFollowListRequest extends AbstractRequest {
 
