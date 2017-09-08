@@ -230,5 +230,11 @@ if verify fails,that will return ErrorResponse Object.
       @IjDbService(DbDynamicConnect.class)
       private DbBasicService dbService;
   ```
+    + @IjResource: inject an object, similar to spring in Resource  
+  ```Java
+      @IjResource
+      private FollowBean followBean;
+  ```  
+  
 
 ## Performance Testing 
