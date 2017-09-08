@@ -223,18 +223,17 @@ if verify fails,that will return ErrorResponse Object.
 
 ## Annotations use  
   + EOP cantains some annotation for injecting objects and create Note,such as: 
-    + @DescNote: define parameter description
-    + @DescNotNull: if you define this annotation no parameter,  when access service, the parameter must be not null, otherwise there will be errors
-    + @IjDbService: database service object, when you use DbBasicService，you can use this annotation like this: 
-  ```Java
+    + @DescNote: define parameter description    
+    + @DescNotNull: if you define this annotation no parameter,  when access service, the parameter must be not null, otherwise there will be errors  
+    + @IjDbService: database service object, when you use DbBasicService，you can use this annotation like this:  
+```Java
       @IjDbService(DbDynamicConnect.class)
       private DbBasicService dbService;
-  ```   
-    + @IjResource: inject an object, similar to spring in Resource  
-  ```Java
+```   
+    + @IjResource: inject an object, similar to spring in Resource    
+```Java
       @IjResource
       private FollowBean followBean;
-  ```  
-  
+```
 
 ## Performance Testing 
