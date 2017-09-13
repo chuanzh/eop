@@ -230,10 +230,15 @@ if verify fails,that will return ErrorResponse Object.
       @IjDbService(DbDynamicConnect.class)
       private DbBasicService dbService;
 ```   
-    + @IjResource: inject an object, similar to spring in Resource    
+    + @IjResource: inject an object, similar to spring in Resource   
 ```Java
       @IjResource
       private FollowBean followBean;
-```
+```   
+    + @IjDbResource: inject an dao object, when using this annotation, it will also initialize the object in dao   
+```Java
+      @IjDbResource
+      private DynamicDao dynamicDao;
+```   
 
 ## Performance Testing 
