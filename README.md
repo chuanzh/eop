@@ -226,19 +226,19 @@ if verify fails,that will return ErrorResponse Object.
     + @DescNote: define parameter description    
     + @DescNotNull: if you define this annotation no parameter,  when access service, the parameter must be not null, otherwise there will be errors  
     + @IjDbService: database service object, when you use DbBasicService，you can use this annotation like this:  
-```Java
+    ```Java
       @IjDbService(DbDynamicConnect.class)
-      private DbBasicService dbService;
-```   
-    + @IjResource: inject an object, similar to spring in Resource   
-```Java
+      private DbBasicService dbService;  
+    ```
+    + @IjResource: inject an object, similar to spring in Resource  
+    ```Java
       @IjResource
-      private FollowBean followBean;
-```   
+      private FollowBean followBean;  
+    ```   
     + @IjDbResource: inject an dao object, when using this annotation, it will also initialize the object in dao   
-```Java
+    ```Java
       @IjDbResource
       private DynamicDao dynamicDao;
-```   
+    ```   
 
 ## Performance Testing 
