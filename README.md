@@ -276,25 +276,25 @@ if verify fails,that will return ErrorResponse Object.
     ```  
 ## Configuration file
 ```java
-	#dynamic master
-	dynamic_db_ipandport=127.0.0.1
-	dynamic_db_name=dynamic
-	dynamic_db_username=root
-	dynamic_db_password=123456
-	dynamic_db_poolconf=maxTotal=50; maxWaitMillis=5000; initialSize=10; validationQueryTimeout=10;
+#dynamic master
+dynamic_db_ipandport=127.0.0.1
+dynamic_db_name=dynamic
+dynamic_db_username=root
+dynamic_db_password=123456
+dynamic_db_poolconf=maxTotal=50; maxWaitMillis=5000; initialSize=10; validationQueryTimeout=10;
 
-	#dynamic slave，multiple use separator with ','
-	dynamic_slave_ipandport=127.0.0.2;127.0.0.3
-	dynamic_slave_name=dynamic;dynamic
-	dynamic_slave_username=dynamic;dynamic
-	dynamic_slave_password=123456;123456
-	dynamic_slave_poolconf=maxActive=200; maxIdle=50; maxWait=30000; removeAbandoned=true; removeAbandonedTimeout=10;
+#dynamic slave，multiple use separator with ';'
+dynamic_slave_ipandport=127.0.0.2;127.0.0.3
+dynamic_slave_name=dynamic;dynamic
+dynamic_slave_username=dynamic;dynamic
+dynamic_slave_password=123456;123456
+dynamic_slave_poolconf=maxTotal=50; maxWaitMillis=5000; initialSize=10; validationQueryTimeout=10;
 
-	# is show SQL
-	showSql=false
+# is show SQL
+showSql=false
 
-	#request time out
-	request_run_time_limit=3000
+#request time out
+request_run_time_limit=3000
 ```
 
 define a connection
