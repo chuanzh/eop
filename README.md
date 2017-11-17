@@ -225,20 +225,55 @@ if verify fails,that will return ErrorResponse Object.
   + EOP cantains some annotation for injecting objects and create Note,such as: 
     + @DescNote: define parameter description    
     + @DescNotNull: if you define this annotation no parameter,  when access service, the parameter must be not null, otherwise there will be errors  
-    + @IjDbService: database service object, when you use DbBasicService，you can use this annotation like this:  
-    ```Java
-      @IjDbService(DbDynamicConnect.class)
-      private DbBasicService dbService;  
-    ```
     + @IjResource: inject an object, similar to spring in Resource  
     ```Java
       @IjResource
       private FollowBean followBean;  
-    ```   
+    ``` 
     + @IjDbResource: inject an dao object, when using this annotation, it will also initialize the object in dao   
     ```Java
-      @IjDbResource
-      private DynamicDao dynamicDao;
-    ```   
+      @DescNote("Get Dynamic Follow list")
+      public class GetFollowList {
+      		
+      	@IjDbResource
+      	private DynamicDao dynamicDao; 
+      	
+      	public AbstractResponse func(GetFollowListRequest request) throws Exception {
+      		GetFollowListResponse response = new GetFollowListResponse();
+      		...
+      		response = dynamicDao.queryFollowList(no,dep,arr,date);
+      		...
+      		
+      		return response;
+      	}
+      	
+      }
+    ``` 
+    + @IjDbService: database service object, when you use DbBasicService，you can use this annotation like this:  
+    ```Java
+      public class DynamicDao {
+      	
+      	@IjDbService(DbDynamicConnect.class)
+      	private DbBasicService dbService;
+      
+      	public List<HashMap<String, String>> queryFollowList(String no, String dep, String arr, String date) throws Exception {
+      		List<FollowBean> result = new ArrayList<FollowBean>();
+      		String sql = "select * from dynamic where no=? and dep=? and arr=? and date=?";
+      		List<HashMap<String, String>> list = dbService.queryExecSql(sql, new Object[]{no, dep, arr, date});
+      
+      		...
+      
+      		return result;
+      		
+      	}
+      	
+      	public void updateState(String id, String state) throws Exception {
+      		String sql = "UPDATE dynamic t SET t.state=? where id=?";
+      		dbService.execSql(sql, new Object[]{state, id});
+      	}
+      	
+      } 
+    ```  
+      
 
 ## Performance Testing 
