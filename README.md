@@ -275,11 +275,11 @@ if verify fails,that will return ErrorResponse Object.
       } 
     ```  
 ## Configuration file
-```java
+```INI  
 #dynamic master
 dynamic_db_ipandport=127.0.0.1
 dynamic_db_name=dynamic
-dynamic_db_username=root
+dynamic_db_username=dynamic
 dynamic_db_password=123456
 dynamic_db_poolconf=maxTotal=50; maxWaitMillis=5000; initialSize=10; validationQueryTimeout=10;
 
@@ -290,10 +290,10 @@ dynamic_slave_username=dynamic;dynamic
 dynamic_slave_password=123456;123456
 dynamic_slave_poolconf=maxTotal=50; maxWaitMillis=5000; initialSize=10; validationQueryTimeout=10;
 
-# is show SQL
+# is show SQL, you can open with debugger
 showSql=false
 
-#request time out
+#request time out (ms)
 request_run_time_limit=3000
 ```
 
