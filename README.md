@@ -241,7 +241,7 @@ if verify fails,that will return ErrorResponse Object.
       	public AbstractResponse func(GetFollowListRequest request) throws Exception {
       		GetFollowListResponse response = new GetFollowListResponse();
       		...
-      		response = dynamicDao.queryFollowList(no,dep,arr,date);
+      		List<FollowBean> followList = dynamicDao.queryFollowList(no,dep,arr,date);
       		...
       		
       		return response;
@@ -256,7 +256,7 @@ if verify fails,that will return ErrorResponse Object.
       	@IjDbService(DbDynamicConnect.class)
       	private DbBasicService dbService;
       
-      	public List<HashMap<String, String>> queryFollowList(String no, String dep, String arr, String date) throws Exception {
+      	public List<FollowBean> queryFollowList(String no, String dep, String arr, String date) throws Exception {
       		List<FollowBean> result = new ArrayList<FollowBean>();
       		String sql = "select * from dynamic where no=? and dep=? and arr=? and date=?";
       		List<HashMap<String, String>> list = dbService.queryExecSql(sql, new Object[]{no, dep, arr, date});
