@@ -172,6 +172,10 @@ the first argument is document path, the second argument is service package path
 ```Java
     CreateNote cn = new CreateNote();
     cn.create("/Users/zhangchuan/Desktop/note.html", "cn.chuanz.service");
+    
+    //or you can carete markdown file
+    cn.createMD("/Users/zhangchuan/Desktop/README.md", "cn.chuanz.service");
+      
 ```
 ![image](https://raw.githubusercontent.com/chuanzh/eop/master/doc/doc1.png)   
 ![image](https://raw.githubusercontent.com/chuanzh/eop/master/doc/doc2.png)   
