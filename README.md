@@ -274,6 +274,109 @@ if verify fails,that will return ErrorResponse Object.
       	
       } 
     ```  
-      
+## Configuration file
+```java
+	#dynamic master
+	dynamic_db_ipandport=127.0.0.1
+	dynamic_db_name=dynamic
+	dynamic_db_username=root
+	dynamic_db_password=123456
+	dynamic_db_poolconf=maxTotal=50; maxWaitMillis=5000; initialSize=10; validationQueryTimeout=10;
+
+	#dynamic slave，multiple use separator with ','
+	dynamic_slave_ipandport=127.0.0.2;127.0.0.3
+	dynamic_slave_name=dynamic;dynamic
+	dynamic_slave_username=dynamic;dynamic
+	dynamic_slave_password=123456;123456
+	dynamic_slave_poolconf=maxActive=200; maxIdle=50; maxWait=30000; removeAbandoned=true; removeAbandonedTimeout=10;
+
+	# is show SQL
+	showSql=false
+
+	#request time out
+	request_run_time_limit=3000
+```
+
+define a connection
+```Java
+package cn.chuanz.util;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.github.chuanzh.orm.DbConfBean;
+import com.github.chuanzh.orm.dbadapter.MysqlDb;
+import com.github.chuanzh.util.FuncStatic;
+
+/**
+ * @author chuan.zhang
+ */
+public class DbDynamicConnect extends MysqlDb{
+	
+	private static Logger logger = LoggerFactory.getLogger(DbDynamicConnect.class);
+
+	private static DbDynamicConnect connect = null;
+	private DbConfBean[] savleBeanArray = null;
+	private DbConfBean masterBean = null;
+	private DbDynamicConnect (){
+	}
+	public static synchronized DbDynamicConnect instance(){
+		if(connect == null)
+			connect = new DbDynamicConnect();
+		return connect;
+	}
+	
+ 
+
+	@Override
+	protected String getEncode() {
+		return "utf-8";
+	}
+	@Override
+	public boolean printSql() {
+ 		return ConfigRead.readBooleanValue("showSql");
+	}
+	@Override
+	protected DbConfBean getMasterDb() {
+		if(masterBean == null){
+			masterBean = new DbConfBean();
+			masterBean.setDbName(ConfigRead.readValue("dynamic_db_name"));
+			masterBean.setIpAndPort(ConfigRead.readValue("dynamic_db_ipandport"));
+			masterBean.setUserName(ConfigRead.readValue("dynamic_db_username"));
+			masterBean.setPassword(ConfigRead.readValue("dynamic_db_password"));
+			masterBean.setPoolConfByStr(ConfigRead.readValue("dynamic_db_poolconf"));
+		}
+		return masterBean;
+	}
+	@Override
+	protected DbConfBean[] getSlaveDbArray() {
+		String slaveIpStr = ConfigRead.readValue("dynamic_slave_ipandport");
+		if(FuncStatic.checkIsEmpty(slaveIpStr)){
+			return null;
+		}else{
+			if(savleBeanArray == null){
+				String[] slaveIpArray = FuncStatic.trim(slaveIpStr.trim(), ";").split(";");
+				String[] slaveDbNameArray	= ConfigRead.readValue("dynamic_slave_name").trim().split(";");
+				String[] slaveUserNameArray	= ConfigRead.readValue("dynamic_slave_username").trim().split(";");
+				String[] slavePasswordArray	= ConfigRead.readValue("dynamic_slave_password").trim().split(";");
+				String  slavePoolconf = ConfigRead.readValue("dynamic_slave_poolconf");
+				savleBeanArray = new DbConfBean[slaveIpArray.length];
+				for(int i=0; i<slaveIpArray.length; i++){
+					DbConfBean bean = new DbConfBean();
+					bean.setIpAndPort(slaveIpArray[i]);
+					bean.setDbName(slaveDbNameArray[i]);
+					bean.setUserName(slaveUserNameArray[i]);
+					bean.setPassword(slavePasswordArray[i]);
+					bean.setPoolConfByStr(slavePoolconf);
+					savleBeanArray[i] = bean;
+				}
+			}
+			return savleBeanArray;
+		}
+	}
+ 
+}
+
+```
 
 ## Performance Testing 
